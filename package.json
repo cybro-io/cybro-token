@@ -1,0 +1,41 @@
+{
+  "name": "cybro-token",
+  "version": "0.1",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "license": "MIT",
+  "files": [
+    "contracts/*.sol",
+    "contracts/helpers",
+    "contracts/interfaces",
+    "contracts/libraries",
+    "contracts/mocks",
+    "test/helpers"
+  ],
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "2.0.3",
+    "@nomicfoundation/hardhat-ethers": "3.0.5",
+    "@nomicfoundation/hardhat-network-helpers": "1.0.10",
+    "@nomicfoundation/hardhat-verify": "2.0.3",
+    "chai": "4.4.0",
+    "dotenv": "16.3.1",
+    "eslint": "8.56.0",
+    "eslint-config-standard": "17.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-n": "16.6.2",
+    "eslint-plugin-promise": "6.1.1",
+    "ethers": "6.10.0",
+    "hardhat": "2.19.4",
+    "hardhat-dependency-compiler": "1.1.3",
+    "hardhat-deploy": "0.11.45",
+    "hardhat-gas-reporter": "1.0.9",
+    "hardhat-tracer": "2.7.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2",
+    "hardhat-contract-sizer": "^2.10.0"
+  }
+}
