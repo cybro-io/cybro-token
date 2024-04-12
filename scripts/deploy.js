@@ -6,8 +6,9 @@ async function main() {
   // Get the contract owner
   const [deployer] = await ethers.getSigners();
   const mintingAddress = process.env.INIT_DAO_WALLET;
-  
+
   console.log(`Deploying contract from: ${deployer.address}`);
+  console.log(`Minting address: ${mintingAddress}`)
 
   // Hardhat helper to get the ethers contractFactory object
   const CYBROToken = await ethers.getContractFactory('CYBROToken');
