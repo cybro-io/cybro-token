@@ -1,0 +1,14 @@
+# Compiler files
+cache/
+out/
+broadcast/
+
+# Docs
+docs/
+
+# Dotenv file
+.env
+.vscode
+
+# Dependencies
+node_modules/

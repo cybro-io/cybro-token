@@ -1,0 +1,11 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib", "node_modules"]
+auto_detect_solc = true
+
+[rpc_endpoints]
+blast = "${BLAST_RPC}"
+optimism = "${OPTIMISM_RPC}"
+arbitrum = "${ARBITRUM_RPC}"
+base = "${BASE_RPC}"
