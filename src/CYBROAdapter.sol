@@ -16,8 +16,4 @@ contract CYBROOFTAdapter is OFTAdapter {
         OFTAdapter(_token, _layerZeroEndpoint, _owner)
         Ownable(_owner)
     {}
-
-    function sharedDecimals() public pure virtual override returns (uint8) {
-        return 18;
-    }
 }
