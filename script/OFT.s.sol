@@ -51,12 +51,11 @@ contract OFTScript is Script {
         return bytes32(uint256(uint160(input)));
     }
 
-    function deploy_testnet() public {
+    function deploy_testnet(address cybro) public {
         (, address deployer,) = vm.readCallers();
         uint256 optimismForkId = vm.createFork(vm.rpcUrl("optimism_sepolia"));
         uint256 blastForkId = vm.createSelectFork(vm.rpcUrl("blast_sepolia"));
 
-        address cybro = address(0);
         address layerZeroEndpoint = address(0x6EDCE65403992e310A62460808c4b910D972f10f);
         vm.startBroadcast();
         CYBROOFTAdapter adapter = new CYBROOFTAdapter(cybro, layerZeroEndpoint, deployer);
@@ -80,12 +79,11 @@ contract OFTScript is Script {
     /**
      * @notice Deploys CYBROOFTAdapter on the Blast mainnet
      */
-    function deploy_adapter() public {
+    function deploy_adapter(address cybro) public {
         (, address deployer,) = vm.readCallers();
         uint256 blastMainnetForkId = vm.createFork(vm.rpcUrl("blast"));
 
         vm.selectFork(blastMainnetForkId);
-        address cybro = address(0);
         ILayerZeroEndpointV2 layerZeroEndpoint =
             ILayerZeroEndpointV2(address(0x1a44076050125825900e736c501f859c50fE728c));
         vm.startBroadcast();
@@ -96,7 +94,7 @@ contract OFTScript is Script {
     }
 
     /**
-     * @notice Deploys multiple OFTs and sets their peers
+     * @notice Deploys multiple OFTs
      * @param ofts The array of OFTDeployInput structs
      */
     function deploy_ofts(OFTDeployInput[] calldata ofts) public {
