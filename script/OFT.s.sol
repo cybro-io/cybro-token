@@ -18,6 +18,7 @@ import {ILayerZeroEndpointV2} from "@layerzerolabs/lz-evm-protocol-v2/contracts/
 import {SetConfigParam} from "@layerzerolabs/lz-evm-protocol-v2/contracts/interfaces/IMessageLibManager.sol";
 import {UlnConfig, UlnBase} from "@layerzerolabs/lz-evm-messagelib-v2/contracts/uln/UlnBase.sol";
 import {OptionsBuilder} from "@layerzerolabs/lz-evm-oapp-v2/contracts/oapp/libs/OptionsBuilder.sol";
+import {EnforcedOptionParam} from "@layerzerolabs/lz-evm-oapp-v2/contracts/oapp/interfaces/IOAppOptionsType3.sol";
 
 contract OFTScript is Script {
     using SafeERC20 for IERC20;
@@ -261,5 +262,32 @@ contract OFTScript is Script {
         params[0] = SetConfigParam({eid: eid, configType: 2, config: abi.encode(newConfig)});
 
         endpoint.setConfig(oft, lib, params);
+    }
+
+    function set_enforced_options(OFTData[] calldata ofts) public {
+        uint256[] memory forkIds = new uint256[](ofts.length);
+        uint32[] memory eids = new uint32[](ofts.length);
+
+        for (uint256 i = 0; i < ofts.length; i++) {
+            forkIds[i] = vm.createSelectFork(ofts[i].rpc);
+            eids[i] = CYBROOFT(ofts[i].oft).endpoint().eid();
+        }
+
+        bytes memory enforcedOptions = OptionsBuilder.newOptions().addExecutorLzReceiveOption(50000, 0);
+
+        for (uint256 i = 0; i < ofts.length; i++) {
+            vm.selectFork(forkIds[i]);
+            EnforcedOptionParam[] memory enforcedOptionsArray = new EnforcedOptionParam[](eids.length - 1);
+            uint256 k;
+            for (uint256 j = 0; j < eids.length; j++) {
+                if (j != i) {
+                    enforcedOptionsArray[k++] =
+                        EnforcedOptionParam({eid: eids[j], msgType: uint16(1), options: enforcedOptions});
+                }
+            }
+            vm.startBroadcast();
+            CYBROOFT(ofts[i].oft).setEnforcedOptions(enforcedOptionsArray);
+            vm.stopBroadcast();
+        }
     }
 }
